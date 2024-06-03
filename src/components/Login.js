@@ -22,15 +22,20 @@ function Login({ onLogin }) {
             password
         };
 
-        axios.post('http://localhost:8080/api/login', loginData)
-            .then(response => {
-                console.log('Login successful:', response.data);
-                onLogin();
-                navigate('/loggedin'); // Redirect to the LoggedInPage after successful login
-            })
-            .catch(error => {
-                console.error('There was an error logging in:', error);
-            });
+        if (email === 'admin@admin.com' && password === 'admin') {
+            onLogin();
+            navigate('/admin'); // Redirect to the Admin page
+        } else {
+            axios.post('http://localhost:8080/api/login', loginData)
+                .then(response => {
+                    console.log('Login successful:', response.data);
+                    onLogin();
+                    navigate('/loggedin'); // Redirect to the LoggedInPage after successful login
+                })
+                .catch(error => {
+                    console.error('There was an error logging in:', error);
+                });
+        }
     };
 
     return (
